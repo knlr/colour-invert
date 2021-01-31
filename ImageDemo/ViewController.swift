@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     private let videoDataOutput = AVCaptureVideoDataOutput()
     private var videoFilter: ColorInvertCIRenderer?
     private lazy var queue = DispatchQueue(label: "AV data queue", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
-    private weak var previewMetalView: PreviewMetalView?
+    @IBOutlet private weak var previewMetalView: PreviewMetalView!
 
     private var enableFilter: Bool = true {
         didSet {
@@ -33,10 +33,14 @@ class ViewController: UIViewController {
         enableFilter = filterSettingSwitch.isOn
     }
 
+    @IBAction func switchCameraPressed() {
+
+
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        previewMetalView = (view as! PreviewMetalView)
+
         previewMetalView?.rotation = .rotate90Degrees
         AVCaptureDevice.requestAccess(for: .video) {
 

@@ -13,15 +13,36 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ImageDemo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="PreviewMetalView" customModule="ImageDemo" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cjg-nT-paM">
-                                <rect key="frame" x="150" y="772" width="220.5" height="51"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cjg-nT-paM" userLabel="Preview Metal View" customClass="PreviewMetalView" customModule="ImageDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZn-Hk-aaK">
+                                <rect key="frame" x="0.0" y="803" width="414" height="59"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWQ-hK-7cU">
+                                        <rect key="frame" x="360" y="7.5" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="Hg2-eQ-st4"/>
+                                            <constraint firstAttribute="height" constant="44" id="ojB-pt-jt0"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" image="CameraSwitch"/>
+                                        <connections>
+                                            <action selector="switchCameraPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="LYk-3V-cqr"/>
+                                        </connections>
+                                    </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="mm7-Xk-tRw">
-                                        <rect key="frame" x="10" y="10" width="200.5" height="31"/>
+                                        <rect key="frame" x="20" y="14" width="200.5" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Normal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cr2-4S-EOC">
                                                 <rect key="frame" x="0.0" y="0.0" width="55.5" height="31"/>
@@ -29,7 +50,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ras-yU-PE5">
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ras-yU-PE5">
                                                 <rect key="frame" x="74" y="0.0" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="filterSettingChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="3A0-SG-PWJ"/>
@@ -42,7 +63,6 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="Cr2-4S-EOC" firstAttribute="leading" secondItem="mm7-Xk-tRw" secondAttribute="leading" id="BI9-GO-qxd"/>
                                         </constraints>
@@ -50,23 +70,29 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="mm7-Xk-tRw" firstAttribute="top" secondItem="cjg-nT-paM" secondAttribute="top" constant="10" id="EhD-w8-vVh"/>
-                                    <constraint firstItem="mm7-Xk-tRw" firstAttribute="top" secondItem="cjg-nT-paM" secondAttribute="top" constant="10" id="KWb-7g-Q0c"/>
-                                    <constraint firstAttribute="bottom" secondItem="mm7-Xk-tRw" secondAttribute="bottom" constant="10" id="QTx-CQ-U3B"/>
-                                    <constraint firstAttribute="trailing" secondItem="mm7-Xk-tRw" secondAttribute="trailing" constant="10" id="q5d-Zf-uGn"/>
-                                    <constraint firstItem="mm7-Xk-tRw" firstAttribute="leading" secondItem="cjg-nT-paM" secondAttribute="leading" constant="10" id="t7t-J6-JQB"/>
+                                    <constraint firstAttribute="height" constant="59" id="Bul-Nx-Ovc"/>
+                                    <constraint firstAttribute="trailing" secondItem="vWQ-hK-7cU" secondAttribute="trailing" constant="10" id="KN8-kA-LD7"/>
+                                    <constraint firstItem="mm7-Xk-tRw" firstAttribute="centerY" secondItem="mZn-Hk-aaK" secondAttribute="centerY" id="MWu-ly-Tkq"/>
+                                    <constraint firstItem="vWQ-hK-7cU" firstAttribute="centerY" secondItem="mZn-Hk-aaK" secondAttribute="centerY" id="YF4-od-4hR"/>
+                                    <constraint firstItem="mm7-Xk-tRw" firstAttribute="leading" secondItem="mZn-Hk-aaK" secondAttribute="leading" constant="20" symbolic="YES" id="pfQ-pv-wno"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cjg-nT-paM" secondAttribute="bottom" constant="39" id="600-Yg-buH"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cjg-nT-paM" secondAttribute="trailing" constant="43.5" id="kco-Ga-IoW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mZn-Hk-aaK" secondAttribute="trailing" id="1e4-1h-foq"/>
+                            <constraint firstItem="cjg-nT-paM" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="FAs-u2-8gR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mZn-Hk-aaK" secondAttribute="bottom" id="H2S-nc-9TD"/>
+                            <constraint firstAttribute="bottom" secondItem="cjg-nT-paM" secondAttribute="bottom" id="ILm-Jp-wwF"/>
+                            <constraint firstItem="cjg-nT-paM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="dmo-oa-HKp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cjg-nT-paM" secondAttribute="trailing" id="kco-Ga-IoW"/>
+                            <constraint firstItem="mZn-Hk-aaK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rV5-R5-Rcs"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="filterSettingSwitch" destination="ras-yU-PE5" id="pNm-nb-2h2"/>
+                        <outlet property="previewMetalView" destination="cjg-nT-paM" id="JVe-5Y-uvz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -75,6 +101,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="CameraSwitch" width="150" height="150"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

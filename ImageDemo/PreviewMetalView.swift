@@ -17,17 +17,7 @@ class PreviewMetalView: MTKView {
         case rotate180Degrees
         case rotate270Degrees
     }
-    
-    var mirroring = false {
-        didSet {
-            syncQueue.sync {
-                internalMirroring = mirroring
-            }
-        }
-    }
-    
-    private var internalMirroring: Bool = false
-    
+
     var rotation: Rotation = .rotate0Degrees {
         didSet {
             syncQueue.sync {
@@ -228,11 +218,8 @@ class PreviewMetalView: MTKView {
         super.init(coder: coder)
         
         device = MTLCreateSystemDefaultDevice()
-        
         configureMetal()
-        
         createTextureCache()
-        
         colorPixelFormat = .bgra8Unorm
     }
     
@@ -272,12 +259,10 @@ class PreviewMetalView: MTKView {
     /// - Tag: DrawMetalTexture
     override func draw(_ rect: CGRect) {
         var pixelBuffer: CVPixelBuffer?
-        var mirroring = false
         var rotation: Rotation = .rotate0Degrees
         
         syncQueue.sync {
             pixelBuffer = internalPixelBuffer
-            mirroring = internalMirroring
             rotation = internalRotation
         }
         
@@ -314,9 +299,8 @@ class PreviewMetalView: MTKView {
         if texture.width != textureWidth ||
             texture.height != textureHeight ||
             self.bounds != internalBounds ||
-            mirroring != textureMirroring ||
             rotation != textureRotation {
-            setupTransform(width: texture.width, height: texture.height, mirroring: mirroring, rotation: rotation)
+            setupTransform(width: texture.width, height: texture.height, mirroring: false, rotation: rotation)
         }
         
         // Set up command buffer and encoder
