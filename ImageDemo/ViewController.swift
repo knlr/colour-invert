@@ -16,6 +16,12 @@ class ViewController: UIViewController {
     private var videoFilter: ColorInvertCIRenderer?
     private lazy var queue = DispatchQueue(label: "AV data queue", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
     @IBOutlet private weak var previewMetalView: PreviewMetalView!
+    private var usingFrontCamera = true
+    private let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(
+        deviceTypes: [.builtInDualCamera,
+                      .builtInWideAngleCamera],
+        mediaType: .video,
+        position: .unspecified)
 
     private var enableFilter: Bool = true {
         didSet {
@@ -28,15 +34,6 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction private func filterSettingChanged() {
-
-        enableFilter = filterSettingSwitch.isOn
-    }
-
-    @IBAction func switchCameraPressed() {
-
-
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,15 +49,37 @@ class ViewController: UIViewController {
         }
         enableFilter = filterSettingSwitch.isOn
     }
+}
 
 
 
-   private func startCapture() {
+private extension ViewController {
 
-        guard let device = AVCaptureDevice.default(for: .video)
+    @IBAction func filterSettingChanged() {
+
+        enableFilter = filterSettingSwitch.isOn
+    }
+
+    @IBAction func switchCameraPressed() {
+
+        usingFrontCamera.toggle()
+        guard let currentInput = session.inputs.first else { return }
+
+        session.beginConfiguration()
+        session.removeInput(currentInput)
+        if let selectedCamera = selectedCamera,
+           let deviceInput = try? AVCaptureDeviceInput(device: selectedCamera),
+           session.canAddInput(deviceInput) {
+
+            session.addInput(deviceInput)
+        }
+        session.commitConfiguration()
+    }
+
+    func startCapture() {
+
+        guard let device = selectedCamera
         else { return }
-        //        guard let device = AVCaptureDevice.devices(for: .video).first(where: { $0.position == .front })
-//        else { return }
 
         do {
             let input = try AVCaptureDeviceInput(device: device)
@@ -78,6 +97,12 @@ class ViewController: UIViewController {
         catch {
             print(error)
         }
+    }
+
+
+    var selectedCamera: AVCaptureDevice? {
+
+        videoDeviceDiscoverySession.devices.first(where: { $0.position == (usingFrontCamera ?  .front : .back) })
     }
 }
 
