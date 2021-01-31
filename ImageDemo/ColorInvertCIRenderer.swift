@@ -9,11 +9,11 @@ import CoreMedia
 import CoreVideo
 import CoreImage
 
-class RosyCIRenderer {
+class ColorInvertCIRenderer {
     
     var isPrepared = false
     private var ciContext: CIContext?
-    private var rosyFilter: CIFilter?
+    private var ciFilter: CIFilter?
     private var outputColorSpace: CGColorSpace?
     private var outputPixelBufferPool: CVPixelBufferPool?
     private(set) var outputFormatDescription: CMFormatDescription?
@@ -33,14 +33,13 @@ class RosyCIRenderer {
         }
         inputFormatDescription = formatDescription
         ciContext = CIContext()
-        rosyFilter = CIFilter(name: "CIColorMatrix")
-        rosyFilter!.setValue(CIVector(x: 0, y: 0, z: 0, w: 0), forKey: "inputGVector")
+        ciFilter = CIFilter(name: "CIColorInvert")
         isPrepared = true
     }
     
     func reset() {
         ciContext = nil
-        rosyFilter = nil
+        ciFilter = nil
         outputColorSpace = nil
         outputPixelBufferPool = nil
         outputFormatDescription = nil
@@ -49,7 +48,7 @@ class RosyCIRenderer {
     }
     
     func render(pixelBuffer: CVPixelBuffer) -> CVPixelBuffer? {
-        guard let rosyFilter = rosyFilter,
+        guard let rosyFilter = ciFilter,
             let ciContext = ciContext,
             isPrepared else {
                 assertionFailure("Invalid state: Not prepared")

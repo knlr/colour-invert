@@ -13,11 +13,10 @@
 		72BF7A4425C5A84D00209142 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72BF7A4225C5A84D00209142 /* Main.storyboard */; };
 		72BF7A4625C5A84E00209142 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72BF7A4525C5A84E00209142 /* Assets.xcassets */; };
 		72BF7A4925C5A84E00209142 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72BF7A4725C5A84E00209142 /* LaunchScreen.storyboard */; };
-		72BF7A6F25C6D9D000209142 /* RosyCIRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BF7A6D25C6D9CF00209142 /* RosyCIRenderer.swift */; };
+		72BF7A6F25C6D9D000209142 /* ColorInvertCIRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BF7A6D25C6D9CF00209142 /* ColorInvertCIRenderer.swift */; };
 		72BF7A7025C6D9D000209142 /* FilterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BF7A6E25C6D9D000209142 /* FilterRenderer.swift */; };
 		72BF7A7325C6F63200209142 /* PreviewMetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BF7A7225C6F63200209142 /* PreviewMetalView.swift */; };
 		72BF7A7B25C6F89C00209142 /* PassThrough.metal in Sources */ = {isa = PBXBuildFile; fileRef = 72BF7A7825C6F89C00209142 /* PassThrough.metal */; };
-		72BF7A7C25C6F89C00209142 /* DepthToGrayscale.metal in Sources */ = {isa = PBXBuildFile; fileRef = 72BF7A7925C6F89C00209142 /* DepthToGrayscale.metal */; };
 		72BF7A7D25C6F89C00209142 /* Mixer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 72BF7A7A25C6F89C00209142 /* Mixer.metal */; };
 /* End PBXBuildFile section */
 
@@ -30,11 +29,10 @@
 		72BF7A4525C5A84E00209142 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72BF7A4825C5A84E00209142 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		72BF7A4A25C5A84E00209142 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		72BF7A6D25C6D9CF00209142 /* RosyCIRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RosyCIRenderer.swift; sourceTree = "<group>"; };
+		72BF7A6D25C6D9CF00209142 /* ColorInvertCIRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorInvertCIRenderer.swift; sourceTree = "<group>"; };
 		72BF7A6E25C6D9D000209142 /* FilterRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterRenderer.swift; sourceTree = "<group>"; };
 		72BF7A7225C6F63200209142 /* PreviewMetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewMetalView.swift; sourceTree = "<group>"; };
 		72BF7A7825C6F89C00209142 /* PassThrough.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PassThrough.metal; sourceTree = "<group>"; };
-		72BF7A7925C6F89C00209142 /* DepthToGrayscale.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = DepthToGrayscale.metal; sourceTree = "<group>"; };
 		72BF7A7A25C6F89C00209142 /* Mixer.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Mixer.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,7 +71,7 @@
 				72BF7A4025C5A84D00209142 /* ViewController.swift */,
 				72BF7A7225C6F63200209142 /* PreviewMetalView.swift */,
 				72BF7A6E25C6D9D000209142 /* FilterRenderer.swift */,
-				72BF7A6D25C6D9CF00209142 /* RosyCIRenderer.swift */,
+				72BF7A6D25C6D9CF00209142 /* ColorInvertCIRenderer.swift */,
 				72BF7A4225C5A84D00209142 /* Main.storyboard */,
 				72BF7A8025C6F8BB00209142 /* Shaders */,
 				72BF7A4525C5A84E00209142 /* Assets.xcassets */,
@@ -86,7 +84,6 @@
 		72BF7A8025C6F8BB00209142 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				72BF7A7925C6F89C00209142 /* DepthToGrayscale.metal */,
 				72BF7A7A25C6F89C00209142 /* Mixer.metal */,
 				72BF7A7825C6F89C00209142 /* PassThrough.metal */,
 			);
@@ -166,12 +163,11 @@
 				72BF7A7D25C6F89C00209142 /* Mixer.metal in Sources */,
 				72BF7A4125C5A84D00209142 /* ViewController.swift in Sources */,
 				72BF7A7B25C6F89C00209142 /* PassThrough.metal in Sources */,
-				72BF7A7C25C6F89C00209142 /* DepthToGrayscale.metal in Sources */,
 				72BF7A3D25C5A84D00209142 /* AppDelegate.swift in Sources */,
 				72BF7A3F25C5A84D00209142 /* SceneDelegate.swift in Sources */,
 				72BF7A7325C6F63200209142 /* PreviewMetalView.swift in Sources */,
 				72BF7A7025C6D9D000209142 /* FilterRenderer.swift in Sources */,
-				72BF7A6F25C6D9D000209142 /* RosyCIRenderer.swift in Sources */,
+				72BF7A6F25C6D9D000209142 /* ColorInvertCIRenderer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

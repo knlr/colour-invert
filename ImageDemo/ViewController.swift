@@ -10,22 +10,27 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
+    @IBOutlet private weak var filterSettingSwitch: UISwitch!
     private lazy var session = AVCaptureSession()
     private let videoDataOutput = AVCaptureVideoDataOutput()
-    private var renderingEnabled = true
-    private var videoFilter: RosyCIRenderer?
+    private var videoFilter: ColorInvertCIRenderer?
     private lazy var queue = DispatchQueue(label: "AV data queue", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
     private weak var previewMetalView: PreviewMetalView?
 
     private var enableFilter: Bool = true {
         didSet {
             if enableFilter {
-                videoFilter = RosyCIRenderer()
+                videoFilter = ColorInvertCIRenderer()
             }
             else {
                 videoFilter = nil
             }
         }
+    }
+
+    @IBAction private func filterSettingChanged() {
+
+        enableFilter = filterSettingSwitch.isOn
     }
 
 
@@ -41,11 +46,12 @@ class ViewController: UIViewController {
                 }
             }
         }
+        enableFilter = filterSettingSwitch.isOn
     }
 
 
 
-    func startCapture() {
+   private func startCapture() {
 
         guard let device = AVCaptureDevice.default(for: .video)
         else { return }
@@ -76,10 +82,6 @@ class ViewController: UIViewController {
 extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate {
 
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-
-        if !renderingEnabled {
-            return
-        }
 
         guard let videoPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer),
             let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer) else {

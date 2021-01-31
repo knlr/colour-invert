@@ -16,13 +16,62 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="PreviewMetalView" customModule="ImageDemo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cjg-nT-paM">
+                                <rect key="frame" x="150" y="772" width="220.5" height="51"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="mm7-Xk-tRw">
+                                        <rect key="frame" x="10" y="10" width="200.5" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Normal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cr2-4S-EOC">
+                                                <rect key="frame" x="0.0" y="0.0" width="55.5" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ras-yU-PE5">
+                                                <rect key="frame" x="74" y="0.0" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="filterSettingChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="3A0-SG-PWJ"/>
+                                                </connections>
+                                            </switch>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inverted" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZX5-un-uwb">
+                                                <rect key="frame" x="138" y="0.0" width="62.5" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="Cr2-4S-EOC" firstAttribute="leading" secondItem="mm7-Xk-tRw" secondAttribute="leading" id="BI9-GO-qxd"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="mm7-Xk-tRw" firstAttribute="top" secondItem="cjg-nT-paM" secondAttribute="top" constant="10" id="EhD-w8-vVh"/>
+                                    <constraint firstItem="mm7-Xk-tRw" firstAttribute="top" secondItem="cjg-nT-paM" secondAttribute="top" constant="10" id="KWb-7g-Q0c"/>
+                                    <constraint firstAttribute="bottom" secondItem="mm7-Xk-tRw" secondAttribute="bottom" constant="10" id="QTx-CQ-U3B"/>
+                                    <constraint firstAttribute="trailing" secondItem="mm7-Xk-tRw" secondAttribute="trailing" constant="10" id="q5d-Zf-uGn"/>
+                                    <constraint firstItem="mm7-Xk-tRw" firstAttribute="leading" secondItem="cjg-nT-paM" secondAttribute="leading" constant="10" id="t7t-J6-JQB"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cjg-nT-paM" secondAttribute="bottom" constant="39" id="600-Yg-buH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cjg-nT-paM" secondAttribute="trailing" constant="43.5" id="kco-Ga-IoW"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="filterSettingSwitch" destination="ras-yU-PE5" id="pNm-nb-2h2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="62"/>
+            <point key="canvasLocation" x="137.68115942028987" y="61.607142857142854"/>
         </scene>
     </scenes>
     <resources>
