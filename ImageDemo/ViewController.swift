@@ -10,12 +10,29 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
-    lazy var session = AVCaptureSession()
-    weak var previewLayer: AVCaptureVideoPreviewLayer?
+    private lazy var session = AVCaptureSession()
+    private let videoDataOutput = AVCaptureVideoDataOutput()
+    private var renderingEnabled = true
+    private var videoFilter: RosyCIRenderer?
+    private lazy var queue = DispatchQueue(label: "AV data queue", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
+    private weak var previewMetalView: PreviewMetalView?
+
+    private var enableFilter: Bool = true {
+        didSet {
+            if enableFilter {
+                videoFilter = RosyCIRenderer()
+            }
+            else {
+                videoFilter = nil
+            }
+        }
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        previewMetalView = (view as! PreviewMetalView)
+        previewMetalView?.rotation = .rotate90Degrees
         AVCaptureDevice.requestAccess(for: .video) {
 
             if $0 {
@@ -27,16 +44,9 @@ class ViewController: UIViewController {
     }
 
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        previewLayer?.frame = view.layer.bounds
-    }
-
 
     func startCapture() {
 
-        let output = AVCapturePhotoOutput()
-        session.sessionPreset = .high
         guard let device = AVCaptureDevice.default(for: .video)
         else { return }
         //        guard let device = AVCaptureDevice.devices(for: .video).first(where: { $0.position == .front })
@@ -44,18 +54,15 @@ class ViewController: UIViewController {
 
         do {
             let input = try AVCaptureDeviceInput(device: device)
-            if session.canAddInput(input) &&
-                session.canAddOutput(output) {
+            if session.canAddInput(input) {
 
                 session.addInput(input)
-                session.addOutput(output)
-
-                let layer = AVCaptureVideoPreviewLayer(session: session)
-                previewLayer = layer
-                layer.videoGravity = .resizeAspectFill
-                view.layer.addSublayer(layer)
-
                 session.startRunning()
+            }
+            if session.canAddOutput(videoDataOutput) {
+                session.addOutput(videoDataOutput)
+                videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
+                videoDataOutput.setSampleBufferDelegate(self, queue: queue)
             }
         }
         catch {
@@ -64,3 +71,40 @@ class ViewController: UIViewController {
     }
 }
 
+
+
+extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate {
+
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+
+        if !renderingEnabled {
+            return
+        }
+
+        guard let videoPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer),
+            let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer) else {
+                return
+        }
+
+        var finalVideoPixelBuffer = videoPixelBuffer
+        if let filter = videoFilter {
+            if !filter.isPrepared {
+                /*
+                 outputRetainedBufferCountHint is the number of pixel buffers the renderer retains. This value informs the renderer
+                 how to size its buffer pool and how many pixel buffers to preallocate. Allow 3 frames of latency to cover the dispatch_async call.
+                 */
+                filter.prepare(with: formatDescription, outputRetainedBufferCountHint: 3)
+            }
+
+            // Send the pixel buffer through the filter
+            guard let filteredBuffer = filter.render(pixelBuffer: finalVideoPixelBuffer) else {
+                print("Unable to filter video buffer")
+                return
+            }
+
+            finalVideoPixelBuffer = filteredBuffer
+        }
+        
+        previewMetalView?.pixelBuffer = finalVideoPixelBuffer
+    }
+}
